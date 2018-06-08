@@ -33,19 +33,19 @@ function inputLength() {
 	return input.value.length;
 }
 
-// 2 - Adds new item to list and resets input box to blank
+// 2 - Adds new item to list & corresponding delete button and resets input box to blank
 function createListElement() {
 	var li = document.createElement("li");
 	li.appendChild(document.createTextNode(input.value));
 	ul.appendChild(li);
 	input.value = "";
+	var btn = document.createElement("button");
+	btn.appendChild(document.createTextNode("Delete!"));
+	li.appendChild(btn).className = "delete";
 }
 
-// 3 - Tool to toggle a class on an object 
 
-// function toggleClass(class) {
-// 	this.classList.toggle(class);
-// }
+
 
 
 
@@ -77,12 +77,18 @@ input.addEventListener("keypress", addListAfterKeypress);
 
 
 
+
 for (var i=0; i<liAll.length; i++) {
 	liAll[i].addEventListener("click", function() {
 		this.classList.toggle("done");
 	})
 }
 
+for (var i=0; i<liAll.length; i++) {
+	liAll[i].addEventListener("click", function() {
+		this.classList.toggle("done");
+	})
+}
 
 
 
