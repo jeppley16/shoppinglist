@@ -3,18 +3,13 @@
 
 // Selecting the elements of interest, caching queries
 var button = document.getElementById("enter");
-var input = document.getElementById("userinput");
+var userInput = document.getElementById("userinput");
 var ul = document.querySelector("ul");
 var liAll = document.querySelectorAll("li");
-var li = document.querySelector("li")[0];
-var del = document.getElementsByClassName("delete");
+// var li = document.querySelector("li")[0];
+var delAll = document.getElementsByClassName("delete");
 
 // ~~~~~~~~~~~~~~~ TOOLBOX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-
-// ~~~~~~~~~ LOWER LEVEL TOOLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-// ~~ No dependencies on other document defined functions ~~ //
-// ~~~~more multipurpose (screwdrivers) ~~~~~~~~~~~~~~~~~~~~ //
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 //  -- Foundational Tools (methods) Used --
 
@@ -30,65 +25,80 @@ var del = document.getElementsByClassName("delete");
 
 // 1 - Input Length Check
 function inputLength() {
-	return input.value.length;
+	return userInput.value.length;
 }
 
 // 2 - Adds new item to list & corresponding delete button and resets input box to blank
 function createListElement() {
 	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(input.value));
+	li.appendChild(document.createTextNode(userInput.value));
+	li.classList.add('items')
 	ul.appendChild(li);
-	input.value = "";
+
+	// toggleDone function when li is clicked
+	li.addEventListener("click", toggledone);
+
+	//Adds a delete button to list item
 	var btn = document.createElement("button");
+	li.appendChild(btn);
+	btn.classList.add('delete');
 	btn.appendChild(document.createTextNode("Delete!"));
-	li.appendChild(btn).className = "delete";
+
+	// Removte list item when delete button is clicked
+	btn.addEventListener("click", removeItem);
+
+	// toggles done class on an li element
+	function toggledone() {
+		li.classList.toggle("done");
+	}
+
+	// Removes Selected Element when called
+
+	function removeItem() {
+		li.remove(); 
+	}
+
+	userInput.value = "";
 }
 
-
-
-
-
-
-
-
-// ~~~~~~~~~ HIGHER LEVEL TOOLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
-// ~~ dependencies on lower level tools, more specific uses ~~ ~~~~~  //
-// ~~~~ (like a jigsaw function defines no new functionality~~~~~~~~ //
-// ~~~ other than putting other tools together ~~~~~~~~~~~~~~~~~~~~ //
-
-// Adds a new list item after button click
+// 3 - Verifies valid user input and adds a new list item after button click and 
 function addListAfterClick() {
 	if (inputLength() > 0) {
 	createListElement();
 	}
 }
 
-//Adds a new lsit item after a key press
+// 4 - Verifies valid user input and that the key pressed was enter, adds a new list item after a key press
 function addListAfterKeypress(event) {
 	if (inputLength() > 0 && event.keyCode === 13) {
 	createListElement();
 	}
 }
 
+// 5 - Removes the parent element of a list item 
+
+// for (var i=0; i<delAll.length; i++) {
+// 	delAll[i].addEventListener("click", function() {
+// 		this.parentNode.remove();
+// 	})
+// }
+
+
 // Actual code that is executed 
 
 button.addEventListener("click", addListAfterClick);
-input.addEventListener("keypress", addListAfterKeypress);
+userInput.addEventListener("keypress", addListAfterKeypress);
 
 
 
 
-for (var i=0; i<liAll.length; i++) {
-	liAll[i].addEventListener("click", function() {
-		this.classList.toggle("done");
-	})
-}
 
-for (var i=0; i<liAll.length; i++) {
-	liAll[i].addEventListener("click", function() {
-		this.classList.toggle("done");
-	})
-}
+// for (var i=0; i<liAll.length; i++) {
+// 	liAll[i].addEventListener("click", function() {
+// 		this.classList.toggle("done");
+// 	})
+// }
+
 
 
 
